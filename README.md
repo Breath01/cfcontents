@@ -1,2 +1,2 @@
-# cfcontents
-Record my cf contents.
+# cfcontests
+Record my cf contests.
