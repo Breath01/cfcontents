@@ -14,48 +14,28 @@ int main () {
     int t;
     cin >> t;
     while (t--) {
-        int n, k;
+        string n;
+        int k;
         cin >> n >> k;
-        string s = to_string(n);
-        set<char> st;
-        for (int i = 0; i < s.size(); ++i) {
-            st.insert(s[i]);
-        }
-        if (st.size() <= k) {
-            cout << n << endl;
-        } else {
-            string ans = "";
-            if (k == 1) {
-                for (int i = 0; i < s.size(); ++i) {
-                    ans += s[0];
-                }
-                cout << ans << endl;
-            } else {
-                int i;
-                for (i = 0; s[i] == s[i + 1]; ++i) {
-                    ans += s[i];
-                }
-                if (s[i] > s[i + 1]) {
-                    ans += s[0];
-                    ans += s[0];
-                    for (int j = i + 2; j < s.size(); ++j) {
-                        ans += s[i + 1];
+        while (true) {
+            set<char> st(n.begin(), n.end());
+            if (st.size() <= k) {
+                cout << n << endl;
+                break;
+            }
+            st.clear();
+            int p = 0;
+            for ( ; ; ++p) {
+                st.insert(n[p]);
+                if (st.size() > k) {
+                    while (n[p] == '9') {
+                        --p;
                     }
-                    cout << ans << endl;
-                } else {
-                    ans += s[i];
-                    if (++st.find(s[i + 1]) == st.end()) {
-                        for (int j = i + 1; j < s.size(); ++j) {
-                            ans += s[i + 1];
-                        }
-                        cout << ans << endl;
-                    } else {
-                        ans += *(++st.find(s[i + 1]));
-                        for (int j = i + 2; j < s.size(); ++j) {
-                            ans += s[0];
-                        }
-                        cout << ans << endl;
+                    ++n[p];
+                    for (int i = p + 1; i < n.size(); ++i) {
+                        n[i] = '0';
                     }
+                    break;
                 }
             }
         }

@@ -14,47 +14,41 @@ int main () {
     int t;
     cin >> t;
     while (t--) {
-        string tt;
-        cin >> tt;
-        vector<char> seq;
+        string s;
+        cin >> s;
+        set<char> st;
         map<char, int> m;
-        set<char> s;
-        for (int i = 0; i < tt.size(); ++i) {
-            s.insert(tt[i]);
-            ++m[tt[i]];
+        for (int i = 0; i < s.size(); ++i) {
+            st.insert(s[i]);
+            ++m[s[i]];
         }
-        set<char> ss;
-        for (int i = tt.size() - 1; i >= 0; --i) {
-            if (i == tt.size() - 1) {
-                seq.push_back(tt[i]);
-                ss.insert(tt[i]);
+        vector<char> seq;
+        set<char> test;
+        for (int i = s.size() - 1; i >= 0; --i) {
+            if (i == s.size() - 1) {
+                seq.push_back(s[i]);
+                test.insert(s[i]);
+                continue;
             }
-            if (ss.find(tt[i]) == ss.end()) {
-                seq.push_back(tt[i]);
-                ss.insert(tt[i]);
+            if (test.find(s[i]) == test.end()) {
+                seq.push_back(s[i]);
+                test.insert(s[i]);
             }
         }
         reverse(seq.begin(), seq.end());
         int n = 0;
-        for (int i = 0; i < seq.size(); ++i) {
-            n += m[seq[i]] / (i + 1);
-        }
         bool ok = true;
-        if (((1 + seq.size()) * seq.size() / 2) > tt.size()) {
-            ok = false;
-        }
-        set<char> test;
-        string tar = tt.substr(0, n);
-        for (int i = 0; i < tar.size(); ++i) {
-            test.insert(tar[i]);
-        }
-        if (test.size() != s.size()) {
-            ok = false;
+        for (int i = 0; i < seq.size(); ++i) {
+            if (m[seq[i]] % (i + 1) != 0 || m[seq[i]] == 0) {
+                ok = false;
+                break;
+            } else {
+                n +=  m[seq[i]] / (i + 1);
+            }
         }
         if (ok) {
-            
+            string tar = s.substr(0, n);
             string tmp = tar;
-            int len = tar.size();
             for (int i = 0; i < seq.size(); ++i) {
                 string temp = "";
                 for (int j = 0; j < tmp.size(); ++j) {
@@ -64,24 +58,17 @@ int main () {
                 }
                 tmp = temp;
                 tar += tmp;
-                len += tmp.size();
-                if (len > tt.size()) {
-                    ok = false;
-                    break;
-                }
-                if (tar != tt.substr(0, len)) {
+                if (tar != s.substr(0, tar.size())) {
                     ok = false;
                     break;
                 }
             }
         }
         if (ok) {
-            cout << tt.substr(0, n) << " ";
-            for (int i = 0; i < seq.size(); ++i) {
-                cout << seq[i];
-            }
+            cout << s.substr(0, n) << " ";
+            for (auto x : seq) cout << x;
             cout << endl;
         } else cout << -1 << endl;
     }
     return 0;
-}
+}  
