@@ -18,7 +18,6 @@ int main () {
         cin >> n;
         string s;
         cin >> s;
-        int mil = n / 2;
         if (s[n - 1] == '0') {
             cout << 1 << " " << n << " " << 1 << " " << n - 1 << endl;
         } else {
@@ -26,10 +25,13 @@ int main () {
             while (s[t - 1] == '1') {
                 --t;
             }
-            if (t - 1 >= mil) {
-                cout << 1 <<  " " << t << " " << 1 << " " << t - 1 << endl;
+            int mid = n / 2;
+            if (t - 1 >= mid) {
+                cout << 1 << " " << t << " " << 1 << " " << t - 1 << endl;
+            } else if (t == 0) {
+                cout << 1 << " " << n - 1 << " " << 2 << " " << n << endl;
             } else {
-                int n1 = n - t;
+                cout << t << " " << n << " " << t + 1 << " " << n << endl;
             }
         }
     }
