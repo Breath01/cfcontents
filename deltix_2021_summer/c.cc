@@ -8,7 +8,7 @@ const ll kmod = 1e9 + 7;
 
 const ll ksz = 2e6 + 7;
 
-int a[ksz];
+ll a[ksz];
 
 int main () {
     ios::sync_with_stdio(false);
@@ -18,34 +18,27 @@ int main () {
     for (int i = 1; i <= n; ++i) {
         cin >> a[i];
     }
-    ll res = 0;
     if (n % 2 == 1) {
         --n;
     }
-    ll rem = 0;
-    int cnt = 0;
+    ll res = 0;
     for (int i = 1; i <= n; i += 2) {
-        if (a[i] + rem >= a[i + 1]) {
-            res += a[i + 1];
-            ll tmp = rem + a[i] - a[i + 1];
-            if (rem == 0 && tmp == 0) {
-                res += cnt;
-                ++cnt;
-            } else if (rem == 0 && tmp > 0) {
-                cnt = 0;
-            } else if (rem > 0 && tmp == 0) {
-                res += cnt;
-                cnt = 1;
+        ll mn = a[i];
+        ll cur = a[i];
+        for (int j = i + 1; j <= n; ++j) {
+            if (j % 2 == 1) {
+                cur += a[j];
+            } else {
+                ll l = max(0LL, cur - a[j]);
+                ll r = min(mn, a[i] - 1);
+                if (l <= r) {
+                    res += r - l + 1;
+                }
+                cur -= a[j];
+                mn = min(mn, cur);
             }
-            rem = tmp;
-        } else {
-            res += a[i];
-            res += cnt;
-            res += rem;
-            cnt = 0;
-            rem = 0;
         }
     }
-    cout << res << endl;
+    cout << res << "\n";
     return 0;
 }
