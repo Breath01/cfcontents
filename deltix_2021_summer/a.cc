@@ -8,25 +8,25 @@ const ll kmod = 1e9 + 7;
 
 const ll ksz = 2e6 + 7;
 
+int a[ksz];
+
 int main () {
     ios::sync_with_stdio(false);
     cin.tie(0);
     int t;
     cin >> t;
     while (t--) {
-        int c, d;
-        cin >> c >> d;
-        if (c == d && c == 0) {
-            cout << 0 << endl;
-        } else if (c == d && c != 0) {
-            cout << 1 << endl;    
-        } else {
-            if (abs(c - d) % 2 == 1) {
-                cout << -1 << endl;
-            } else {
-                cout << 2 << endl;
+        int n;
+        cin >> n;
+        int odd = 0;
+        for (int i = 1; i <= n; ++i) {
+            cin >> a[i];
+            if (a[i] % 2 == 1) {
+                ++odd;
             }
         }
+        int mid = (n + 1) / 2;
+        
     }
     return 0;
 }
